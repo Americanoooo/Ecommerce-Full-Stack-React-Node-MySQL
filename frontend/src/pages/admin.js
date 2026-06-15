@@ -195,7 +195,7 @@ export default function Admin({
     });
   }
   function SalvarEdit() {
-    fetch(`http://localhost:3001/produtos/${editProduto.id}`, {
+    fetch(`${process.env.REACT_APP_API_URL}/produtos/${editProduto.id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -216,7 +216,7 @@ export default function Admin({
       });
   }
   function SalvarProduto(){
-    fetch("http://localhost:3001/produtos", {
+    fetch(`${process.env.REACT_APP_API_URL}/produtos`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -341,7 +341,7 @@ export default function Admin({
   }
 
   function RemoverProduto(id) {
-    fetch(`http://localhost:3001/produtos/${id}`, {
+    fetch(`${process.env.REACT_APP_API_URL}/produtos/${id}`, {
       method: "DELETE",
     })
       .then((res) => res.json())

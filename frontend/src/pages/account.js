@@ -28,7 +28,7 @@ export default function Account({setNome, logado, setLogado, usuario, setUsuario
         setMensagem("A senha deve conter pelo menos uma letra maiúscula")
         return
       }
-      fetch("http://localhost:3001/usuarios",{
+      fetch(`${process.env.REACT_APP_API_URL}/usuarios`,{
         method:"POST",
         headers: { "Content-type": "application/json" },
         body: JSON.stringify({usuario: criarUsuario, nome: criarNome, email: criarEmail, senha: criarSenha})
@@ -46,7 +46,7 @@ export default function Account({setNome, logado, setLogado, usuario, setUsuario
 
   function login() {
 
-  fetch("http://localhost:3001/login", {
+  fetch(`${process.env.REACT_APP_API_URL}/login`, {
 
     method: "POST",
 

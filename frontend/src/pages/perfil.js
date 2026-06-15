@@ -13,7 +13,7 @@ export default function Perfil({ usuario, setUsuario, setLogado, logado }) {
   const [messageEmail, setMessageEmail]=useState("")
 
   function AlterarNome() {
-    fetch(`http://localhost:3001/usuarios/nome/${usuario.id}`, {
+    fetch(`${process.env.REACT_APP_API_URL}/usuarios/nome/${usuario.id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -32,7 +32,7 @@ export default function Perfil({ usuario, setUsuario, setLogado, logado }) {
       });
   }
   function AlterarUsuario() {
-    fetch(`http://localhost:3001/usuarios/usuario/${usuario.usuario}`, {
+    fetch(`${process.env.REACT_APP_API_URL}/usuarios/usuario/${usuario.usuario}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -64,7 +64,7 @@ export default function Perfil({ usuario, setUsuario, setLogado, logado }) {
       setMessageSenha("A senha deve conter pelo menos uma letra maiúscula");
       return;
     }
-    fetch(`http://localhost:3001/usuarios/senha/${usuario.id}`, {
+    fetch(`${process.env.REACT_APP_API_URL}/usuarios/senha/${usuario.id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -81,7 +81,7 @@ export default function Perfil({ usuario, setUsuario, setLogado, logado }) {
   }
 
   function AlterarEmail(){
-    fetch(`http://localhost:3001/usuarios/email/${usuario.id}`,{
+    fetch(`${process.env.REACT_APP_API_URL}/usuarios/email/${usuario.id}`,{
         method: "PUT",
         headers:{
             "Content-Type": "application/json",

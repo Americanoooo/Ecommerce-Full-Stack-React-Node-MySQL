@@ -19,7 +19,7 @@ export default function Routes() {
   const [logado, setLogado] = useState(false);
 
   useEffect(() => {
-    fetch("http://localhost:3001/produtos")
+    fetch(`${process.env.REACT_APP_API_URL}/produtos`)
       .then((res) => res.json())
       .then((data) => {
         const produtoCorrigidos = data.map((p) => ({

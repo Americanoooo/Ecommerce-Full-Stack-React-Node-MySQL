@@ -14,7 +14,7 @@ function App({ produtos, carrinho, setCarrinho, busca, setBusca, setProdutos }) 
 
 
   useEffect(()=>{
-    fetch("http://localhost:3001/produtos")
+    fetch(`${process.env.REACT_APP_API_URL}/produtos`)
     .then((res)=>res.json())
     .then((data)=>{
       setProdutos(data);
