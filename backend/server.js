@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require('express')
 const cors = require('cors')
 const mysql = require("mysql2")
@@ -5,24 +6,27 @@ const bcrypt = require("bcrypt");
 
 const app = express()
 app.use(cors())
-app.use(cors())
 app.use(express.json());
 
 
-const db= mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "0710",
-    database:"ecommerce"
-})
+console.log("DB ENV CHECK:", {
+    MYSQLHOST: process.env.MYSQLHOST,
+    MYSQLUSER: process.env.MYSQLUSER,
+    MYSQLDATABASE: process.env.MYSQLDATABASE,
+    MYSQLPORT: process.env.MYSQLPORT,
+    temPassword: !!process.env.MYSQLPASSWORD
+});
 
-db.connect((err)=>{
-    if(err){
-        console.log(err)
-    }else{
-        console.log("MySQl conectado")
-    }
-})
+const db = mysql.createPool({
+    host: process.env.MYSQLHOST,
+    user: process.env.MYSQLUSER,
+    password: process.env.MYSQLPASSWORD,
+    database: process.env.MYSQLDATABASE,
+    port: Number(process.env.MYSQLPORT),
+    waitForConnections: true,
+    connectionLimit: 10
+});
+
 
 app.get("/produtos",(req, res)=>{
     db.query("SELECT * FROM produtos", (err, result)=>{
@@ -286,6 +290,7 @@ app.put("/usuarios/email/:id", (req, res)=>{
             }
         )
     })
-app.listen(3001, () =>{
-    console.log("servidor rodando na porta 3001 vai tomando")
+    const PORT = process.env.PORT || 3001;
+app.listen(PORT, () =>{
+    console.log("Server running on port", PORT);
 })
