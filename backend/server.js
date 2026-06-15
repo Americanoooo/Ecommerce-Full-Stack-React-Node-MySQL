@@ -9,14 +9,6 @@ app.use(cors())
 app.use(express.json());
 
 
-console.log("DB ENV CHECK:", {
-    MYSQLHOST: process.env.MYSQLHOST,
-    MYSQLUSER: process.env.MYSQLUSER,
-    MYSQLDATABASE: process.env.MYSQLDATABASE,
-    MYSQLPORT: process.env.MYSQLPORT,
-    temPassword: !!process.env.MYSQLPASSWORD
-});
-
 const db = mysql.createPool({
     host: process.env.MYSQLHOST,
     user: process.env.MYSQLUSER,
