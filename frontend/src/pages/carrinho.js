@@ -46,6 +46,11 @@ export default function Carrinho({carrinho, setCarrinho, produtos }) {
   localStorage.setItem("carrinho", JSON.stringify(novoCarrinho))
   setCarrinho(novoCarrinho)
   }
+  function removerCarrinhoInteiro(){
+    localStorage.setItem("carrinho", JSON.stringify([]))
+    setCarrinho([])
+  }
+
   const totalCarrinhoCredito = formatarPreco(
     carrinho.reduce(
       (acc, atual) => acc + atual.preco * atual.quantidade * 1.05,
@@ -81,20 +86,20 @@ export default function Carrinho({carrinho, setCarrinho, produtos }) {
       {carrinho.length > 0 && (
         <main className="flex flex-col md:flex-row-reverse md:gap-4 md:justify-around h-screen shadow ">
           <div className="flex flex-col w-full md:w-1/3 gap-2">
-            <h1 className="text-xl ">Carrinho de compras</h1>
-            <h1 className="text-xl">Resumo</h1>
+            <h1 className="text-xl font-semibold">Carrinho de compras</h1>
+            <h1 className="text-xl font-semibold">Resumo</h1>
 
-            <div className="flex flex-row items-center gap-6 text-xl ">
+            <div className="flex flex-row items-center gap-6 text-xl font-semibold">
               <h1>Total</h1>
               <h1>{totalCarrinhoCredito}</h1>
             </div>
 
-            <div className="flex flex-col gap-3 justify-center py-3 mx-auto w-full">
-              <h1 className="text-xl text-blue-700">{totalCarrinhoPix}</h1>
+            <div className="flex flex-col gap-2 justify-center py-3 mx-auto w-full font-semibold">
+              <h1 className="text-xl font-semibold text-blue-700">{totalCarrinhoPix}</h1>
               <p>No PIX com 15% de desconto</p>
               <p>Ou</p>
-              <h1 className="text-red-700 text-xl">{totalCarrinhoCredito}</h1>
-              <p className="text-sm">Em até 12x de {totalCarrinhoDividido}</p>
+              <h1 className="text-red-700 text-xl font-semibold">{totalCarrinhoCredito}</h1>
+              <p className="text-sm font-semibold">Em até 12x de {totalCarrinhoDividido}</p>
               <button className="w-full bg-blue-900  hover:bg-blue-800 text-white transition h-10  rounded">
                 FINALIZAR PEDIDO
               </button>
@@ -135,19 +140,24 @@ export default function Carrinho({carrinho, setCarrinho, produtos }) {
 
           <div className="overflow-x-auto overflow-y-auto flex min-h-0 ">
             <section className="min-w-[700px] w-full">
-              <div className="flex flex-row  items-center p-3 text-xl mt-3 p-8 gap-6 w-full">
+              <div className="flex flex-row  items-center p-3 text-xl mt-3 p-8 gap-6 w-full font-semibold">
                 <h2 className="w-56">Produto</h2>
                 <h2 className="w-32">Quantidade</h2>
                 <h2 className="w-56">Preço à vista no PIX</h2>
+                 <button 
+                 onClick={removerCarrinhoInteiro}
+                 className='text-sm text-red-700'>
+                  Remover todos os produtos
+                 </button>
               </div>
 
               {carrinho.map((p) => (
                 <div
                   key={p.id}
-                  className="flex flex-row flex-nowrap items-center mt-3 bg-white shadow rounded-lg p-3 gap-6 w-full h-auto "
+                  className="flex flex-row flex-nowrap items-center mt-3 bg-white shadow rounded-lg p-3 gap-6 w-full h-auto font-semibold"
                 >
                   <div className="flex flex-col gap-1 w-80">
-                    <h1 className="text-md">{p.nome}</h1>
+                    <h1 className="text-xl">{p.nome}</h1>
                     <img
                       src={p.imagem}
                       alt=""
@@ -169,20 +179,21 @@ export default function Carrinho({carrinho, setCarrinho, produtos }) {
                       +
                     </button>
                   </div>
-                  <div className="flex flex-col sm text-gray-700 gap-2 w-64">
-                    <p className="sm w-30">
+                  <div className="flex flex-col text-md text-gray-800 gap-2 w-64">
+                    <p>
                       {formatarPreco(p.preco * 1.05)} ou em até 10x de
                     </p>
-                    <p className="sm">
+                    <p> 
+                      
                       {formatarPreco((p.preco * 1.1) / 10)} sem juros ou
                     </p>
-                    <p className="text-lg text-blue-700">
+                    <p className="text-lg font-semibold text-blue-700">
                       {formatarPreco(p.preco)}
                     </p>
-                    <p className="text-sm text-blue-700">No Pix</p>
+                    <p className="text-sm font-medium text-blue-700">No Pix</p>
                     <button
                       onClick={() => remover(p.id)}
-                      className="bg-blue-700 hover:bg-blue-800 transition text-white rounded"
+                      className="bg-blue-700 hover:bg-blue-800 transition text-white rounded h-8"
                     >
                       Remover
                     </button>

@@ -6,9 +6,9 @@ export default function Navbar({ busca, setBusca, usuario, logado, setPesquisaPr
    
 
   return (
-    <header className="flex flex-col md:flex-row gap-2 mb-3 justify-around text-lg h-20 items-center shadow">
-      <div className="flex flex-row gap-10 items-center">
-        <Link to="/" className="text-blue-600 text-2xl">
+    <header className="flex flex-col md:flex-row gap-2 mb-3 justify-around text-lg h-20 items-center shadow font-semibold">
+      <div className="flex flex-row gap-10 items-center ">
+        <Link to="/" className="text-blue-600 text-2xl font-bold">
           TechStore
         </Link>
 
@@ -28,11 +28,11 @@ export default function Navbar({ busca, setBusca, usuario, logado, setPesquisaPr
         <div className="flex gap-8">
           <div className="flex flex-row-reverse gap-1">
           <Link to={`/?search=${pesquisaProduto}`}>
-          <button className="bg-blue-600 p-1 rounded shadow text-white h-9">Buscar</button>
+          <button className="bg-blue-600 p-1 rounded shadow text-white h-10 font-semibold">Buscar</button>
           </Link>
           <input
             placeholder="Buscar Produtos..."
-            className="border rounded-lg h-10 px-4 pr-10 w-80 border-gray-300 focus:border-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-700 placeholder-gray-400 transition text-lg"
+            className="border rounded-lg h-10 px-4 pr-10 w-80 border-gray-300 focus:border-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-700 placeholder-gray-400 transition text-lg font-semibold"
             type="text"
             value={busca}
             onChange={(e) => {setBusca(e.target.value); setPesquisaProduto(e.target.value)}}

@@ -45,6 +45,10 @@ export default function Account({setNome, logado, setLogado, usuario, setUsuario
     }
 
   function login() {
+    if(!email.trim() || !senha.trim()){
+      setMensagem("Preencha email e senha");
+      return;
+    }
 
   fetch(`${process.env.REACT_APP_API_URL}/login`, {
 

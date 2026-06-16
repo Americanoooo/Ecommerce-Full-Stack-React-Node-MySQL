@@ -56,28 +56,28 @@ function App({ produtos, carrinho, setCarrinho, busca, setBusca, setProdutos }) 
 
   function ListaProduto({ produtos}) {
     return (
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 items-stretch justify-items-center gap-x-0 gap-y-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 items-stretch justify-items-center gap-6">
         {produtos.map((p) => (
-          <div key={p.id} className="flex flex-col gap-2 shadow p-4 w-3/4 h-full mx-auto font-medium"> 
+          <div key={p.id} className="flex flex-col gap-2 bg-white border border-gray-100 shadow-sm hover:shadow-md transition-shadow duration-200 rounded-xl p-4 w-3/4 h-full mx-auto font-semibold">
             <img
               src={p.imagem}
               alt=""
               className="w-full h-40 object-cover rounded-lg"
             />
-            <h1 className="text-md max-w-30">{p.nome}</h1>
-            <div className="flex flex-col sm text-gray-700">
-              <p className="sm w-30">
+            <h1 className="text-lg font-semibold text-gray-800">{p.nome}</h1>
+            <div className="flex flex-col text-md text-gray-800">
+              <p>
                 {formatarPreco(p.preco * 1.05)} ou em até 10x de
               </p>
-              <p className="sm">
+              <p>
                 {formatarPreco((p.preco * 1.1) / 10)} sem juros ou
               </p>
-              <p className="text-lg text-blue-700">{formatarPreco(p.preco)}</p>
-              <p className="text-sm text-blue-700">No Pix</p>
+              <p className="text-lg font-bold text-blue-700">{formatarPreco(p.preco)}</p>
+              <p className="text-md font-medium text-blue-700">No Pix</p>
             </div>
-            <Link to={`/produto/${p.id}`}>
+            <Link to={`/produto/${p.id}`} className="mt-auto block">
               <button
-                className="bg-blue-500 hover:bg-blue-700 text-white h-10 w-full rounded-lg mt-auto font-medium"
+                className="bg-blue-500 hover:bg-blue-700 text-white h-10 w-full rounded-lg font-medium"
               >
                 Comprar
               </button>
@@ -95,7 +95,7 @@ function App({ produtos, carrinho, setCarrinho, busca, setBusca, setProdutos }) 
         <select
           value={filtro}
           onChange={(e) => setFiltro(e.target.value)}
-          className="border-blue-700 roundedsddsd-xl px-4 py-2 text-blue-700 font-semibold bg-white focus:outline-none focus:ring-2 focus:ring-blue-700 shadow-sm transition cursor-pointer text-base"
+          className="border-blue-700 rounded-xl px-4 py-2 text-blue-700 font-semibold bg-white focus:outline-none focus:ring-2 focus:ring-blue-700 shadow-sm transition cursor-pointer text-base"
         >
           <option value="">Todas as categorias</option>
           {produtosFiltro.map((p) => (
@@ -108,39 +108,7 @@ function App({ produtos, carrinho, setCarrinho, busca, setBusca, setProdutos }) 
     );
   }
 
-  function MostrarCarrinho({ carrinho, setCarrinho }) {
-    function RemoverCarrinho(id) {
-      setCarrinho((carrinhoAtual) => carrinhoAtual.filter((p) => p.id !== id));
-    }
-    const total = carrinho.reduce(
-      (soma, p) => soma + p.preco * p.quantidade,
-      0
-    );
-    if(loading) return <p>Carregando...</p>
-
-    if(produtos.length ===0) return <p>Nenhum produto encontrado</p>   
-    
-    return (
-      <div>
-        <h1>Carrinho</h1>
-        <div>
-          {carrinho.length === 0 ? (
-            <p>carrinho vazio</p>
-          ) : (
-            carrinho.map((p) => (
-              <div key={p.id}>
-                <h1>{p.nome}</h1>
-                <p>{formatarPreco(p.preco)}</p>
-                <p>{p.quantidade}</p>
-                <button onClick={() => RemoverCarrinho(p.id)}>Remover</button>
-              </div>
-            ))
-          )}
-          <p>Total: {formatarPreco(total)}</p>
-        </div>
-      </div>
-    );
-  }
+  
 
   return (
     <div>
@@ -157,7 +125,7 @@ function App({ produtos, carrinho, setCarrinho, busca, setBusca, setProdutos }) 
           </div>
         </div>
       </div>
-      <section className="px-5 md:px-20"> {/* padding lateral de 20px (5 no mobile, 20 no md+) */}
+      <section className="px-5 md:px-20 bg-gray-50 py-4">
         <BotaoFiltro />
         <ListaProduto produtos={buscaProduto} busca={busca} filtro={filtro} />
       </section>

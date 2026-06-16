@@ -33,21 +33,21 @@ export default function Produto({ carrinho, produtos, setCarrinho }) {
 
   return (
     <div className="px-5 md:px-20 py-4 flex justify-center " > 
-      <main className="flex flex-col md:flex-row gap-5 md:gap-40 md:justify-center w-2/3  p-10 rounded " > 
+      <main className="flex flex-col md:flex-row gap-5 md:gap-40 md:justify-center w-2/3  p-10 rounded shadow" > 
         <img className="rounded w-full  " src={produto.imagem} />
 
-        <div className="flex flex-col gap-4 w-full">
+        <div className="flex flex-col gap-3 w-full">
           <h1 className="md:text-xl font-bold">
             {produto.nome.toUpperCase()}
           </h1>
 
-          <p className="md:text-md">Marca: {produto.marca}</p>
+          <p className="md:text-md font-semibold">Marca: {produto.marca}</p>
 
-          <div className="flex gap-4 md:gap-8 justify-start items-center">
+          <div className="flex gap-4 md:gap-8 justify-start items-center font-semibold">
             <div>
               <p className="text-sm ">à vista</p>
 
-              <p className=" text-xl  md:text-2xl text-green-600 font-bold">
+              <p className=" text-xl  md:text-2xl text-blue-600 font-bold">
                 {formatarPreco(produto.preco)}
               </p>
 
@@ -81,13 +81,13 @@ export default function Produto({ carrinho, produtos, setCarrinho }) {
           <div>
             <h1 className="text-red-600 font-bold">CARACTERÍSTICAS:</h1>
 
-            <p>Garantia: 12 Meses</p>
+            <p className="font-semibold">Garantia: 12 Meses</p>
           </div>
           <div className="w-full">
             <h1 className="text-xl text-red-600 font-bold">
               Parcelamento
               </h1>
-              <div className="w-full shadow-lg bg-gray-100 p-4 md:p-3">
+              <div className="w-full shadow-lg bg-gray-100 p-4 md:p-3 font-semibold">
                 <div className="flex flex-col md:flex-row gap-10">
                   <div className="flex flex-col">           
                     {[...Array(5)].map((_, i) => (
