@@ -8,8 +8,8 @@ export default function Navbar({ busca, setBusca, usuario, logado, setPesquisaPr
   return (
     <header className="flex flex-col md:flex-row gap-2 mb-3 justify-around text-lg h-20 items-center shadow">
       <div className="flex flex-row gap-10 items-center">
-        <Link to="/" className="text-red-600 text-2xl font-bold">
-          🎬 CineStore
+        <Link to="/" className="text-blue-600 text-2xl">
+          TechStore
         </Link>
 
         <nav className="hidden md:flex flex-row  gap-5">
@@ -31,7 +31,7 @@ export default function Navbar({ busca, setBusca, usuario, logado, setPesquisaPr
           <button className="bg-blue-600 p-1 rounded shadow text-white h-9">Buscar</button>
           </Link>
           <input
-            placeholder="Buscar Filmes..."
+            placeholder="Buscar Produtos..."
             className="border rounded-lg h-10 px-4 pr-10 w-80 border-gray-300 focus:border-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-700 placeholder-gray-400 transition text-lg"
             type="text"
             value={busca}

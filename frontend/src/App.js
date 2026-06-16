@@ -77,7 +77,7 @@ function App({ produtos, carrinho, setCarrinho, busca, setBusca, setProdutos }) 
             </div>
             <Link to={`/produto/${p.id}`}>
               <button
-                className="bg-red-600 hover:bg-red-700 text-white h-10 w-full rounded-lg mt-auto font-medium"
+                className="bg-blue-500 hover:bg-blue-700 text-white h-10 w-full rounded-lg mt-auto font-medium"
               >
                 Comprar
               </button>
@@ -144,26 +144,16 @@ function App({ produtos, carrinho, setCarrinho, busca, setBusca, setProdutos }) 
 
   return (
     <div>
-      <div className="bg-gray-900">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 flex flex-col md:flex-row items-center gap-10">
-          <div className="md:w-1/2">
-            <h1 className="text-5xl font-bold text-white">
-              Os Melhores Filmes Por Preços Incríveis
+      <div className="bg-blue-600 ">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+          <div className="m-3xl">
+            <h1 className="text-5xl font-bold text-white ">
+              Os Melhores Eletrônicos Por Preços Incríveis
             </h1>
-            <p className="text-gray-300 text-2xl py-7">
-              Lançamentos, clássicos e edições de colecionador com entrega
-              rápida e segura
+            <p className="text-white text-2xl py-7">
+              Smartphones, notebooks, fones e muito mais com entrega rápida e
+              segura
             </p>
-            <span className="inline-block bg-red-600 text-white text-lg font-semibold px-6 py-3 rounded-lg">
-              🎬 Sua sessão começa aqui
-            </span>
-          </div>
-          <div className="md:w-1/2 flex justify-center">
-            <img
-              src="/minha-foto.jpg"
-              alt="Minha foto"
-              className="w-full max-w-md h-auto rounded-lg shadow-2xl border-4 border-red-600 object-cover"
-            />
           </div>
         </div>
       </div>
