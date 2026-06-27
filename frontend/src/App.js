@@ -32,7 +32,7 @@ function App({ produtos, carrinho, setCarrinho, busca, setBusca, setProdutos }) 
   ))
   .filter((produto)=>
   !filtro || produto.categoria === filtro);
-  
+
 
   function formatarPreco(preco) {
     return Number(preco).toLocaleString('pt-BR', {
@@ -55,30 +55,42 @@ function App({ produtos, carrinho, setCarrinho, busca, setBusca, setProdutos }) 
   }
 
   function ListaProduto({ produtos}) {
+    if (loading) {
+      return (
+        <div className="flex justify-center items-center py-20">
+          <p className="text-gray-400 dark:text-gray-500 text-sm">Carregando produtos...</p>
+        </div>
+      );
+    }
+
+    if (produtos.length === 0) {
+      return (
+        <div className="flex flex-col items-center py-16 gap-3">
+          <p className="text-gray-500 dark:text-gray-400 font-medium">Nenhum produto encontrado.</p>
+          <p className="text-gray-400 dark:text-gray-500 text-sm">Tente buscar por outro termo ou categoria.</p>
+        </div>
+      );
+    }
+
     return (
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 items-stretch justify-items-center gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
         {produtos.map((p) => (
-          <div key={p.id} className="flex flex-col gap-2 bg-white border border-gray-100 shadow-sm hover:shadow-md transition-shadow duration-200 rounded-xl p-4 w-3/4 h-full mx-auto font-semibold">
+          <div key={p.id} className="flex flex-col bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 shadow-sm hover:shadow-md transition-shadow duration-200 rounded-xl p-4">
             <img
               src={p.imagem}
-              alt=""
-              className="w-full h-40 object-cover rounded-lg"
+              alt={p.nome}
+              className="w-full h-44 object-cover rounded-lg bg-gray-50 dark:bg-gray-700"
             />
-            <h1 className="text-lg font-semibold text-gray-800">{p.nome}</h1>
-            <div className="flex flex-col text-md text-gray-800">
-              <p>
-                {formatarPreco(p.preco * 1.05)} ou em até 10x de
-              </p>
-              <p>
-                {formatarPreco((p.preco * 1.1) / 10)} sem juros ou
-              </p>
-              <p className="text-lg font-bold text-blue-700">{formatarPreco(p.preco)}</p>
-              <p className="text-md font-medium text-blue-700">No Pix</p>
+            <div className="flex flex-col flex-1 mt-3 gap-1">
+              <h2 className="text-sm font-semibold text-gray-800 dark:text-gray-100 leading-snug">{p.nome}</h2>
+              <div className="mt-auto pt-3">
+                <p className="text-xs text-gray-600 dark:text-gray-400 font-medium">{formatarPreco(p.preco * 1.05)} no crédito</p>
+                <p className="text-xl font-bold text-blue-600 dark:text-blue-400">{formatarPreco(p.preco)}</p>
+                <p className="text-xs text-gray-500 dark:text-gray-400">no PIX com 15% off</p>
+              </div>
             </div>
-            <Link to={`/produto/${p.id}`} className="mt-auto block">
-              <button
-                className="bg-blue-500 hover:bg-blue-700 text-white h-10 w-full rounded-lg font-medium"
-              >
+            <Link to={`/produto/${p.id}`} className="mt-3 block">
+              <button className="bg-blue-600 hover:bg-blue-700 text-white font-semibold h-10 w-full rounded-lg transition-colors duration-150 text-sm">
                 Comprar
               </button>
             </Link>
@@ -91,42 +103,40 @@ function App({ produtos, carrinho, setCarrinho, busca, setBusca, setProdutos }) 
   function BotaoFiltro() {
     const produtosFiltro = [...new Set(produtos.map((p) => p.categoria))];
     return (
-      <div className="flex gap-8 justify-center my-8">
-        <select
-          value={filtro}
-          onChange={(e) => setFiltro(e.target.value)}
-          className="border-blue-700 rounded-xl px-4 py-2 text-blue-700 font-semibold bg-white focus:outline-none focus:ring-2 focus:ring-blue-700 shadow-sm transition cursor-pointer text-base"
-        >
-          <option value="">Todas as categorias</option>
-          {produtosFiltro.map((p) => (
-            <option key={p} value={p}>
-              {p}
-            </option>
-          ))}
-        </select>
-      </div>
+      <select
+        value={filtro}
+        onChange={(e) => setFiltro(e.target.value)}
+        className="border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-200 rounded-lg px-4 py-2 text-sm text-gray-700 font-medium bg-white focus:outline-none focus:border-blue-600 shadow-sm transition-colors cursor-pointer"
+      >
+        <option value="">Todas as categorias</option>
+        {produtosFiltro.map((p) => (
+          <option key={p} value={p}>{p}</option>
+        ))}
+      </select>
     );
   }
 
-  
-
   return (
-    <div>
-      <div className="bg-blue-600 ">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-          <div className="m-3xl">
-            <h1 className="text-5xl font-bold text-white ">
-              Os Melhores Eletrônicos Por Preços Incríveis
-            </h1>
-            <p className="text-white text-2xl py-7">
-              Smartphones, notebooks, fones e muito mais com entrega rápida e
-              segura
-            </p>
-          </div>
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+      <div className="bg-gradient-to-br from-blue-700 to-blue-500">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-16 md:py-24">
+          <p className="text-blue-200 text-xs font-semibold uppercase tracking-wider mb-3">
+            Bem-vindo à TechStore
+          </p>
+          <h1 className="text-3xl md:text-5xl font-bold text-white leading-tight">
+            Os Melhores Eletrônicos<br className="hidden md:block" /> Por Preços Incríveis
+          </h1>
+          <p className="text-blue-100 text-base md:text-lg mt-4 max-w-xl">
+            Smartphones, notebooks, fones e muito mais com entrega rápida e segura
+          </p>
         </div>
       </div>
-      <section className="px-5 md:px-20 bg-gray-50 py-4">
-        <BotaoFiltro />
+
+      <section className="max-w-6xl mx-auto px-4 sm:px-6 py-8">
+        <div className="flex items-center justify-between mb-6">
+          <h2 className="text-xl font-bold text-gray-900 dark:text-white">Produtos</h2>
+          <BotaoFiltro />
+        </div>
         <ListaProduto produtos={buscaProduto} busca={busca} filtro={filtro} />
       </section>
     </div>

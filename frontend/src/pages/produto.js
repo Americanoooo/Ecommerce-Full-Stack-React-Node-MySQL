@@ -17,97 +17,107 @@ export default function Produto({ carrinho, produtos, setCarrinho }) {
       let novoCarrinho
       if(existe){
         novoCarrinho =carrinho.map((p)=>
-         p.id ===produto.id
-       ? {...p, quantidade: p.quantidade+ 1}
-       :p
-       ) 
-
+         p.id ===produto.id ? {...p, quantidade: p.quantidade+ 1} : p
+       )
       }else{
          novoCarrinho = [...carrinho,{...produto, quantidade: 1}]
       }
-
       setCarrinho(novoCarrinho)
   }
 
-  if (!produto) return <p>Produto não encontrado</p>;
+  if (!produto) return (
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex flex-col items-center justify-center gap-3">
+      <p className="text-lg font-semibold text-gray-700 dark:text-gray-200">Produto não encontrado</p>
+      <Link to="/">
+        <button className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-5 py-2 rounded-lg transition-colors duration-150 text-sm">
+          Voltar à loja
+        </button>
+      </Link>
+    </div>
+  );
 
   return (
-    <div className="px-5 md:px-20 py-4 flex justify-center " > 
-      <main className="flex flex-col md:flex-row gap-5 md:gap-40 md:justify-center w-2/3  p-10 rounded shadow" > 
-        <img className="rounded w-full  " src={produto.imagem} />
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 py-8">
 
-        <div className="flex flex-col gap-3 w-full">
-          <h1 className="md:text-xl font-bold">
-            {produto.nome.toUpperCase()}
-          </h1>
+        <Link to="/" className="inline-flex items-center gap-1 text-sm text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-150 mb-6">
+          <svg width="16" height="16" fill="none" viewBox="0 0 24 24">
+            <path stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7"/>
+          </svg>
+          Voltar
+        </Link>
 
-          <p className="md:text-md font-semibold">Marca: {produto.marca}</p>
+        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 p-6 md:p-10">
+          <div className="flex flex-col md:flex-row gap-8 md:gap-12">
 
-          <div className="flex gap-4 md:gap-8 justify-start items-center font-semibold">
-            <div>
-              <p className="text-sm ">à vista</p>
-
-              <p className=" text-xl  md:text-2xl text-blue-600 font-bold">
-                {formatarPreco(produto.preco)}
-              </p>
-
-              <p className="text-sm ">no PIX com 15% de desconto</p>
+            <div className="w-full md:w-2/5 flex-shrink-0">
+              <img
+                className="w-full h-64 md:h-96 object-cover rounded-xl bg-gray-50 dark:bg-gray-700"
+                src={produto.imagem}
+                alt={produto.nome}
+              />
             </div>
 
-            <div className="flex flex-col">
-              <p className="text-red-600 md:text-2xl  font-bold">
-                {formatarPreco(produto.precoAntigo)}
-              </p>
+            <div className="flex flex-col gap-5 flex-1">
+              <div>
+                <p className="text-xs text-gray-400 dark:text-gray-500 font-medium uppercase tracking-wider mb-1">{produto.marca}</p>
+                <h1 className="text-2xl font-bold text-gray-900 dark:text-white leading-tight">{produto.nome}</h1>
+              </div>
 
-              <p className="w-64 ">
-                em até 6x de{" "}
-                <span className="text-red-600 font-bold">
-                  {formatarPreco(produto.precoAntigo / 6)}
-                </span>
-              </p>
-            </div>
-          </div>
-          <div className="w-full md:1/3">
-            <Link to="/carrinho">
-              <button
-                className="bg-blue-500 hover:bg-blue-600 text-white h-16 rounded w-full  text-xl"
-                onClick={() => adicionarProduto(produto)}
-              >
-                Comprar
-              </button>
-            </Link>
-          </div>
+              <div className="flex flex-col gap-3 border-t border-gray-100 dark:border-gray-700 pt-5">
+                <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-100 dark:border-blue-800 rounded-xl p-4">
+                  <p className="text-xs text-blue-600 dark:text-blue-400 font-medium uppercase tracking-wider mb-1">Melhor preço — à vista no PIX</p>
+                  <p className="text-3xl font-bold text-blue-600 dark:text-blue-400">{formatarPreco(produto.preco)}</p>
+                  <p className="text-xs text-blue-500 dark:text-blue-400 mt-1">com 15% de desconto</p>
+                </div>
 
-          <div>
-            <h1 className="text-red-600 font-bold">CARACTERÍSTICAS:</h1>
+                <div className="px-1">
+                  <p className="text-xs text-gray-500 dark:text-gray-400 mb-1">No crédito em até 6x</p>
+                  <p className="text-xl font-bold text-gray-700 dark:text-gray-200">{formatarPreco(produto.precoAntigo)}</p>
+                  <p className="text-sm text-gray-500 dark:text-gray-400">
+                    ou em até 6x de{" "}
+                    <span className="font-semibold text-gray-700 dark:text-gray-200">{formatarPreco(produto.precoAntigo / 6)}</span>{" "}
+                    sem juros
+                  </p>
+                </div>
+              </div>
 
-            <p className="font-semibold">Garantia: 12 Meses</p>
-          </div>
-          <div className="w-full">
-            <h1 className="text-xl text-red-600 font-bold">
-              Parcelamento
-              </h1>
-              <div className="w-full shadow-lg bg-gray-100 p-4 md:p-3 font-semibold">
-                <div className="flex flex-col md:flex-row gap-10">
-                  <div className="flex flex-col">           
+              <Link to="/carrinho">
+                <button
+                  className="bg-blue-600 hover:bg-blue-700 text-white font-semibold w-full h-12 rounded-lg transition-colors duration-150 text-base"
+                  onClick={() => adicionarProduto(produto)}>
+                  Comprar agora
+                </button>
+              </Link>
+
+              <div className="border-t border-gray-100 dark:border-gray-700 pt-4 flex flex-col gap-1">
+                <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Características</p>
+                <p className="text-sm text-gray-700 dark:text-gray-300">Garantia: 12 meses</p>
+              </div>
+
+              <div className="border-t border-gray-100 dark:border-gray-700 pt-4">
+                <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-3">Parcelamento no crédito</p>
+                <div className="bg-gray-50 dark:bg-gray-900 border border-gray-100 dark:border-gray-700 rounded-xl p-4">
+                  <div className="grid grid-cols-2 gap-x-6 gap-y-1">
                     {[...Array(5)].map((_, i) => (
-                      <h2 key={i}>
-                        {i + 1}x de {formatarPreco(produto.precoAntigo / (i + 1))}
-                      </h2>
+                      <p key={i} className="text-sm text-gray-700 dark:text-gray-300 py-1 border-b border-gray-100 dark:border-gray-700">
+                        <span className="font-semibold">{i + 1}x</span> de {formatarPreco(produto.precoAntigo / (i + 1))}
+                      </p>
                     ))}
-                  </div>
-                  <div className="flex flex-col">
                     {[...Array(5)].map((_, i) => (
-                      <h2 key={i + 5} className="min-w-[110px]">
-                        {i + 6}x de {formatarPreco(produto.precoAntigo / (i + 6))}
-                      </h2>
+                      <p key={i + 5} className="text-sm text-gray-700 dark:text-gray-300 py-1 border-b border-gray-100 dark:border-gray-700">
+                        <span className="font-semibold">{i + 6}x</span> de {formatarPreco(produto.precoAntigo / (i + 6))}
+                      </p>
                     ))}
                   </div>
                 </div>
               </div>
+
+            </div>
           </div>
         </div>
-      </main>
+
+      </div>
     </div>
   );
 }

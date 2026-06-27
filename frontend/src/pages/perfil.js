@@ -15,39 +15,25 @@ export default function Perfil({ usuario, setUsuario, setLogado, logado }) {
   function AlterarNome() {
     fetch(`${process.env.REACT_APP_API_URL}/usuarios/nome/${usuario.id}`, {
       method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        nome: nomeMudar,
-      }),
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ nome: nomeMudar }),
     })
       .then((res) => res.json())
       .then((data) => {
-        setUsuario({
-          ...usuario,
-          nome: nomeMudar,
-        });
+        setUsuario({ ...usuario, nome: nomeMudar });
         setMessageNome(data.messageNome);
       });
   }
   function AlterarUsuario() {
     fetch(`${process.env.REACT_APP_API_URL}/usuarios/usuario/${usuario.usuario}`, {
       method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        novoUsuario: usuarioMudar,
-      }),
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ novoUsuario: usuarioMudar }),
     })
       .then((res) => res.json())
       .then((data) => {
         setMessageUsuario(data.messageUsuario);
-        setUsuario({
-          ...usuario,
-          usuario: usuarioMudar,
-        });
+        setUsuario({ ...usuario, usuario: usuarioMudar });
       });
   }
   function AlterarSenha() {
@@ -66,12 +52,8 @@ export default function Perfil({ usuario, setUsuario, setLogado, logado }) {
     }
     fetch(`${process.env.REACT_APP_API_URL}/usuarios/senha/${usuario.id}`, {
       method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        novaSenha: senhaMudar,
-      }),
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ novaSenha: senhaMudar }),
     })
       .then((res) => res.json())
       .then((data) => {
@@ -83,129 +65,107 @@ export default function Perfil({ usuario, setUsuario, setLogado, logado }) {
   function AlterarEmail(){
     fetch(`${process.env.REACT_APP_API_URL}/usuarios/email/${usuario.id}`,{
         method: "PUT",
-        headers:{
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-            email:emailMudar
-        }),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: emailMudar }),
     })
     .then((res)=> res.json())
     .then((data)=>{
-        setUsuario({
-            ...usuario,
-            email:emailMudar,
-        });
+        setUsuario({ ...usuario, email: emailMudar });
         setMessageEmail((data.messageEmail));
     })
   }
 
-  if (!logado || !usuario) {
-    return <Redirect to="/account" />;
-  }
+  if (!logado || !usuario) return <Redirect to="/account" />;
+
+  const inputClass = "border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 dark:placeholder-gray-400 rounded-lg h-10 px-3 flex-1 focus:border-blue-600 focus:outline-none placeholder-gray-400 transition-colors text-sm";
+  const btnClass = "bg-blue-600 hover:bg-blue-700 text-white font-semibold px-4 h-10 rounded-lg transition-colors duration-150 text-sm flex-shrink-0";
+
   return (
-    <div className="px-10">
-      <section className="flex justify-center bg-gray-100  w-full md:w-3/4 m-auto rounded-xl shadow p-5">
-        <div className="flex flex-col gap-5 text-lg md:text-xl">
-          <div className="flex flex-row-reverse justify-between">
-            <Link to="/account">
-              <button
-                className="self-end bg-red-500 text-white h-8 w-24 rounded shadow"
-                onClick={() => {
-                  setLogado(false);
-                  setUsuario(null);
-                  localStorage.removeItem("usuario");
-                }}
-              >
-                SAIR
-              </button>
-            </Link>
-            <h1 className="text-center ">Seja bem vindo: {usuario.nome}</h1>
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 px-4 py-10">
+      <div className="max-w-2xl mx-auto flex flex-col gap-5">
+
+        <div className="flex items-center justify-between">
+          <div>
+            <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Meu Perfil</h1>
+            <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">Olá, {usuario.nome}</p>
           </div>
-          <h1>Nome: {usuario.nome}</h1>
-          <div className="flex gap-2">
-            <label>Mudar Nome</label>
-            <input
-              className="rounded shadow h-8 p-1"
-              value={nomeMudar}
-              onChange={(e) => setnomeMudar(e.target.value)}
-            ></input>
+          <Link to="/account">
             <button
-              className="bg-blue-500 hover:bg-blue-700 text-white h-8 w-24 rounded shadow "
-              onClick={AlterarNome}
+              className="bg-red-600 hover:bg-red-700 text-white font-semibold px-5 py-2 rounded-lg transition-colors duration-150 text-sm"
+              onClick={() => { setLogado(false); setUsuario(null); localStorage.removeItem("usuario"); }}
             >
-              Mudar
+              Sair
             </button>
-            <p>{messageNome}</p>
+          </Link>
+        </div>
+
+        <section className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 p-6 flex flex-col gap-6">
+          <h2 className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Informações da conta</h2>
+
+          <div className="flex flex-col gap-1">
+            <p className="text-xs text-gray-500 dark:text-gray-400 font-medium">Nome atual</p>
+            <p className="text-base font-semibold text-gray-800 dark:text-gray-100">{usuario.nome}</p>
+            <div className="flex gap-2 mt-2">
+              <input placeholder="Novo nome" className={inputClass}
+                value={nomeMudar} onChange={(e) => setnomeMudar(e.target.value)} />
+              <button className={btnClass} onClick={AlterarNome}>Salvar</button>
+            </div>
+            {messageNome && <p className="text-xs text-green-600 font-medium mt-1">{messageNome}</p>}
           </div>
 
-          <div className="flex flex-col gap-2">
-            <h1>Usuario: {usuario.usuario}</h1>
-            <div className="flex gap-2 ">
-              <label>Mudar Usuario</label>
-              <input
-                className="rounded shadow h-8 p-1"
-                value={usuarioMudar}
-                onChange={(e) => setUsuarioMudar(e.target.value)}
-              ></input>
-              <button
-                className="bg-blue-500 hover:bg-blue-700 text-white h-8 w-24 rounded shadow "
-                onClick={AlterarUsuario}
-              >
-                Mudar
-              </button>
-              <p>{messageUsuario}</p>
+          <div className="border-t border-gray-100 dark:border-gray-700" />
+
+          <div className="flex flex-col gap-1">
+            <p className="text-xs text-gray-500 dark:text-gray-400 font-medium">Usuário atual</p>
+            <p className="text-base font-semibold text-gray-800 dark:text-gray-100">@{usuario.usuario}</p>
+            <div className="flex gap-2 mt-2">
+              <input placeholder="Novo usuário" className={inputClass}
+                value={usuarioMudar} onChange={(e) => setUsuarioMudar(e.target.value)} />
+              <button className={btnClass} onClick={AlterarUsuario}>Salvar</button>
             </div>
-            <div className="flex gap-2">
-              <h1>Mudar Senha</h1>
-              <input
-                type="password"
-                className="rounded shadow h-8 p-1"
-                value={senhaMudar}
-                onChange={(e) => setSenhaMudar(e.target.value)}
-              ></input>
-              <button
-                className="bg-blue-500 hover:bg-blue-700 text-white h-8 w-24 rounded shadow"
-                onClick={() => {AlterarSenha();}}>
-                Mudar
-              </button>
+            {messageUsuario && <p className="text-xs text-green-600 font-medium mt-1">{messageUsuario}</p>}
+          </div>
+
+          <div className="border-t border-gray-100 dark:border-gray-700" />
+
+          <div className="flex flex-col gap-1">
+            <p className="text-xs text-gray-500 dark:text-gray-400 font-medium">Email atual</p>
+            <p className="text-base font-semibold text-gray-800 dark:text-gray-100">{usuario.email}</p>
+            <div className="flex gap-2 mt-2">
+              <input placeholder="Novo email" className={inputClass}
+                value={emailMudar} onChange={(e) => setEmailMudar(e.target.value)} />
+              <button className={btnClass} onClick={AlterarEmail}>Salvar</button>
             </div>
-            <p
-              className={
-                messageSenha === "Senha alterada com sucesso"
-                  ? "text-green-600"
-                  : "text-red-600"
-              }
-            >
-              {messageSenha}
-            </p>
+            {messageEmail && <p className="text-xs text-green-600 font-medium mt-1">{messageEmail}</p>}
           </div>
-          <h1>Email: {usuario.email}</h1>
-          <div className="flex gap-2">
-            <h1>
-                Mudar Email
-            </h1>
-            <input
-                className="rounded shadow h-8 p-1"
-                value={emailMudar}
-                onChange={(e) => setEmailMudar(e.target.value)}
-              ></input>
-              <button
-                className="bg-blue-500 hover:bg-blue-700 text-white h-8 w-24 rounded shadow"
-                onClick={() => {AlterarEmail();}}>
-                Mudar
-              </button>
+        </section>
+
+        <section className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 p-6 flex flex-col gap-4">
+          <h2 className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Segurança</h2>
+          <div className="flex flex-col gap-1">
+            <p className="text-xs text-gray-500 dark:text-gray-400 font-medium">Nova senha</p>
+            <div className="flex gap-2 mt-2">
+              <input type="password" placeholder="Digite a nova senha" className={inputClass}
+                value={senhaMudar} onChange={(e) => setSenhaMudar(e.target.value)} />
+              <button className={btnClass} onClick={() => { AlterarSenha(); }}>Salvar</button>
+            </div>
+            {messageSenha && (
+              <p className={`text-xs font-medium mt-1 ${messageSenha === "Senha alterada com sucesso" ? "text-green-600" : "text-red-600"}`}>
+                {messageSenha}
+              </p>
+            )}
           </div>
-          {usuario?.admin && (
+        </section>
+
+        {usuario?.admin && (
           <Link to="/admin">
-          <button className="bg-blue-700 text-white w-1/3 p-1 rounded mx-auto">
-            Painel Admin
-          </button>
+            <button className="bg-blue-600 hover:bg-blue-700 text-white font-semibold w-full h-12 rounded-lg transition-colors duration-150">
+              Painel Administrativo
+            </button>
           </Link>
-          )}
-        </div>
-        
-      </section>
+        )}
+
+      </div>
     </div>
   );
 }
